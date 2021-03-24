@@ -5,7 +5,8 @@ import uz.pdp.RestFullApiOne.Entity.Address;
 
 public interface AddressRepository extends JpaRepository<Address,Integer> {
 
-    boolean existsByStreet(String street);
 
-    boolean existsByStreetAndIdNot(String street, Integer id);
+    boolean existsByStreetAndHomeNumber(String street, Integer homeNumber);
+    boolean existsByStreetAndHomeNumberAndIdNot(String street, Integer homeNumber, Integer id);
+
 }

@@ -35,7 +35,7 @@ public class WorkerService {
         if (existsByNameAndDepartmentId)
             return new ApiResponse("This is such Worker name and department", false);
 
-        boolean existsByStreet = addressRepository.existsByStreet(workerDto.getStreet());
+        boolean existsByStreet = addressRepository.existsByStreetAndHomeNumber(workerDto.getStreet(), workerDto.getHomeNumber());
         if (existsByStreet)
             return new ApiResponse("This is such a street",false);
 
@@ -85,7 +85,7 @@ public class WorkerService {
         if (existsByNameAndDepartmentId)
             return new ApiResponse("This is such Worker name and department",false);
 
-        boolean existsByStreet = addressRepository.existsByStreet(workerDto.getStreet());
+        boolean existsByStreet = addressRepository.existsByStreetAndHomeNumberAndIdNot(workerDto.getStreet(), workerDto.getHomeNumber(), id);
         if (existsByStreet)
             return new ApiResponse("This is such a street",false);
 

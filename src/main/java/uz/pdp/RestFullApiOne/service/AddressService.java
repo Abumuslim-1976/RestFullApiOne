@@ -17,7 +17,7 @@ public class AddressService {
     AddressRepository addressRepository;
 
     public ApiResponse createAddress(AddressDto addressDto) {
-        boolean exists = addressRepository.existsByStreet(addressDto.getStreet());
+        boolean exists = addressRepository.existsByStreetAndHomeNumber(addressDto.getStreet(), addressDto.getHomeNumber());
         if (exists)
             return new ApiResponse("Bunday uy nomi mavjud", false);
 
@@ -51,7 +51,7 @@ public class AddressService {
 
 
     public ApiResponse editAddress(Integer id, AddressDto addressDto) {
-        boolean exists = addressRepository.existsByStreetAndIdNot(addressDto.getStreet(), id);
+        boolean exists = addressRepository.existsByStreetAndHomeNumberAndIdNot(addressDto.getStreet(), addressDto.getHomeNumber(), id);
         if (exists)
             return new ApiResponse("Bunday uy nomi mavjud", false);
 

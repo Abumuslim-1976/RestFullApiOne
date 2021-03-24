@@ -35,11 +35,11 @@ public class CompanyService {
     public ApiResponse createCompany(CompanyDto companyDto) {
         boolean existsByCorpName = companyRepository.existsByCorpName(companyDto.getCorpName());
         if (existsByCorpName)
-            return new ApiResponse("There is such corp name",false);
+            return new ApiResponse("There is such corp name", false);
 
-        boolean existsByStreet = addressRepository.existsByStreet(companyDto.getStreet());
+        boolean existsByStreet = addressRepository.existsByStreetAndHomeNumber(companyDto.getStreet(), companyDto.getHomeNumber());
         if (existsByStreet)
-            return new ApiResponse("There is such a street name",false);
+            return new ApiResponse("There is such a street name", false);
 
         Address address = new Address();
         address.setStreet(companyDto.getStreet());
@@ -51,22 +51,22 @@ public class CompanyService {
         company.setDirectorName(companyDto.getDirectorName());
         company.setAddress(saveAddress);
         companyRepository.save(company);
-        return new ApiResponse("Company created",true);
+        return new ApiResponse("Company created", true);
     }
 
 
-    public ApiResponse editCompany(Integer id,CompanyDto companyDto) {
+    public ApiResponse editCompany(Integer id, CompanyDto companyDto) {
         Optional<Company> optionalCompany = companyRepository.findById(id);
         if (!optionalCompany.isPresent())
-            return new ApiResponse("This is no such company",false);
+            return new ApiResponse("This is no such company", false);
 
         boolean corpNameAndIdNot = companyRepository.existsByCorpNameAndIdNot(companyDto.getCorpName(), id);
         if (corpNameAndIdNot)
-            return new ApiResponse("This is such a corp name",false);
+            return new ApiResponse("This is such a corp name", false);
 
-        boolean existsByStreet = addressRepository.existsByStreet(companyDto.getStreet());
+        boolean existsByStreet = addressRepository.existsByStreetAndHomeNumberAndIdNot(companyDto.getStreet(), companyDto.getHomeNumber(), id);
         if (existsByStreet)
-            return new ApiResponse("This is such a street name",false);
+            return new ApiResponse("This is such a street name", false);
 
         Company company = optionalCompany.get();
         company.setCorpName(companyDto.getCorpName());
@@ -79,7 +79,7 @@ public class CompanyService {
 
         company.setAddress(saveAddress);
         companyRepository.save(company);
-        return new ApiResponse("Company edited",true);
+        return new ApiResponse("Company edited", true);
     }
 
 }

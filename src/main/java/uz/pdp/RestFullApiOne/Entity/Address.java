@@ -10,15 +10,16 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Address {
+@Table(uniqueConstraints = @UniqueConstraint(name = "home_number",columnNames = {"street","home_number"}))
+public class Address{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private String street;
 
-    @Column(nullable = false)
+    @Column(nullable = false,name = "home_number")
     private Integer homeNumber;
 }
